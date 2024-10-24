@@ -1,4 +1,3 @@
-
 package TransferObject;
 
 import java.util.Objects;

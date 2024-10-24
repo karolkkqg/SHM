@@ -9,6 +9,7 @@ import java.time.LocalTime;
  * @author kahun
  */
 public class Recordatorio {
+    
     private int id;
     private LocalTime hora;
 
