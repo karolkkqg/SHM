@@ -1,4 +1,4 @@
-package Main;
+package BussinesLogic;
 /**
  *
  * @author kahun
