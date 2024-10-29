@@ -17,7 +17,7 @@ public class Recordatorio {
         this.id = id;
     }
 
-    public void setNombre(LocalTime hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
