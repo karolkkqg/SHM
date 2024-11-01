@@ -16,6 +16,17 @@ public class Paciente {
     private String correo;
     private String contrasena;
 
+    public Paciente () {}
+
+    public Paciente(String nombre, String apellido, String genero, Date fechaNacimiento, String correo, String contrasena) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.genero = genero;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correo = correo;
+        this.contrasena = contrasena;
+    }
+    
     public int getId() {
         return id;
     }

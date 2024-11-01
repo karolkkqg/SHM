@@ -3,15 +3,17 @@ package TransferObject;
 import java.sql.Date;
 import java.util.Objects;
 
-/**
- *
- * @author epale
- */
 public class Vacuna {
     private int id;
     private String nombre;
     private Date fechaAplicacion;
 
+    public Vacuna () {}
+    
+    public Vacuna(String nombre) {
+        this.nombre = nombre;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -45,7 +47,7 @@ public class Vacuna {
         }
         else {
             final Vacuna other = (Vacuna) obj;
-            esIgual = this.id == other.id && this.nombre.equals(other.nombre) && this.fechaAplicacion == other.fechaAplicacion;
+            esIgual = this.nombre.equals(other.nombre) && this.fechaAplicacion == other.fechaAplicacion;
         }
 
         return esIgual;
