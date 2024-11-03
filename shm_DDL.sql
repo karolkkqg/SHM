@@ -10,7 +10,7 @@ CREATE TABLE `Paciente` (
   `genero` enum('masculino','femenino','otro') NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `contraseña` varchar(100) NOT NULL
+  `contrasena` varchar(100) NOT NULL
 );
 
 CREATE TABLE `Tratamiento` (
