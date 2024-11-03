@@ -8,6 +8,7 @@ dist/
 nbdist/
 .nb-gradle/
 
+.idea
 
 # Compiled class file
 *.class
