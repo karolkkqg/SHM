@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author luis_
+ * @author luis_cvqz
  */
 public class DosisDAO {
     

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
  *
- * @author luis_
+ * @author luis_cvqz
  */
 public class Tratamiento {
     private int id;
