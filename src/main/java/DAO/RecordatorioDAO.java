@@ -9,44 +9,47 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class RecordatorioDAO {
+    
+    // Método para obtener todos los recordatorios
     public ArrayList<Recordatorio> obtenerRecordatorio() throws SQLException {
-        ArrayList<Recordatorio> listaAlergia = new ArrayList<>();
-        String consultaSQL = "SELECT id, hora FROM recordatorio;";
+        ArrayList<Recordatorio> listaRecordatorios = new ArrayList<>();
+        String consultaSQL = "SELECT id, hora FROM recordatoria;";
         
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         ResultSet resultado = consulta.executeQuery();
         while (resultado.next()) {
-            listaAlergia.add(convertirResultSetRecordatorio(resultado));
+            listaRecordatorios.add(convertirResultSetRecordatorio(resultado));
         }
         consulta.close();
         resultado.close();
         ConexionBaseDatos.desconectar();
         
-        return listaAlergia;
+        return listaRecordatorios;
     }
     
-    public ArrayList<Recordatorio> obtenerRecodatorioDeDosisPaciente (int idPaciente, int idDosis) throws SQLException {
-        ArrayList<Recordatorio> listaAlergias = new ArrayList<>();
-        String consultaSQL = "SELECT recordatorio.id, recordatorio.hora FROM recordatorio LEFT JOIN dosis ON recordatorio.id_dosis = dosis.id WHERE id_dosis = ? AND dosis.id_paciente = ?;";
-        
+    // Método para obtener los recordatorios asociados a una dosis específica
+    public ArrayList<Recordatorio> obtenerRecordatorioDeDosis(int idDosis) throws SQLException {
+        ArrayList<Recordatorio> listaRecordatorios = new ArrayList<>();
+        String consultaSQL = "SELECT id, hora FROM recordatoria WHERE id_dosis = ?";
+
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
-        consulta.setInt(1, idPaciente);
-        consulta.setInt(2, idDosis);
+        consulta.setInt(1, idDosis);
         ResultSet resultado = consulta.executeQuery();
         while (resultado.next()) {
-            listaAlergias.add(convertirResultSetRecordatorio(resultado));
+            listaRecordatorios.add(convertirResultSetRecordatorio(resultado));
         }
         consulta.close();
         resultado.close();
         ConexionBaseDatos.desconectar();
-        
-        return listaAlergias;
+
+        return listaRecordatorios;
     }
-    
-    public int agregarAlergiaAlAntecedente (int idRecordatorio, LocalTime hora) throws SQLException {
-        String consultaSQL = "INSERT INTO recordatorio (id, hora) VALUES (?,?)";
+
+    // Método para agregar un nuevo recordatorio
+    public int agregarRecordatorio(int idDosis, LocalTime hora) throws SQLException {
+        String consultaSQL = "INSERT INTO recordatoria (id_dosis, hora) VALUES (?, ?)";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
-        consulta.setInt(1, idRecordatorio);
+        consulta.setInt(1, idDosis);
         consulta.setTime(2, Time.valueOf(hora));
         int resultado = consulta.executeUpdate();
         consulta.close();
@@ -55,8 +58,9 @@ public class RecordatorioDAO {
         return resultado;
     }
     
-    public int eliminarAlergiaDeAntecedente (int idRecordatorio) throws SQLException {
-        String consultaSQL = "DELETE FROM recordatorio WJERE id = ?;";
+    // Método para eliminar un recordatorio específico
+    public int eliminarRecordatorio(int idRecordatorio) throws SQLException {
+        String consultaSQL = "DELETE FROM recordatoria WHERE id = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idRecordatorio);
         int resultado = consulta.executeUpdate();
@@ -65,17 +69,17 @@ public class RecordatorioDAO {
         
         return resultado;
     }
-    
-    private static Recordatorio convertirResultSetRecordatorio (ResultSet resultado) throws SQLException {
-        Recordatorio alergia = new Recordatorio();
-        alergia.setId(resultado.getInt("id"));
+
+    // Método auxiliar para convertir un ResultSet en un objeto Recordatorio
+    private static Recordatorio convertirResultSetRecordatorio(ResultSet resultado) throws SQLException {
+        Recordatorio recordatorio = new Recordatorio();
+        recordatorio.setId(resultado.getInt("id"));
         Time time = resultado.getTime("hora");
         if (time != null) {
-            alergia.setHora(time.toLocalTime());
+            recordatorio.setHora(time.toLocalTime());
         } else {
-            alergia.setHora(null); 
+            recordatorio.setHora(null); 
         }
-
-        return alergia;
+        return recordatorio;
     }
 }

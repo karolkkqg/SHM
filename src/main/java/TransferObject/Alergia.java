@@ -9,6 +9,13 @@ import java.util.Objects;
 public class Alergia {
     private int id;
     private String nombre;
+    
+    public Alergia() {
+    }
+
+    public Alergia(String nombre) {
+        this.nombre = nombre;
+    }
 
     public void setId(int id) {
         this.id = id;

@@ -1,4 +1,4 @@
-package DAO;
+    package DAO;
 
 import TransferObject.Tratamiento;
 import java.sql.PreparedStatement;

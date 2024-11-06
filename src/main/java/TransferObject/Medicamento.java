@@ -7,8 +7,16 @@ import java.util.Objects;
  * @author kahun
  */
 public class Medicamento {
+
     private int id;
     private String nombre;
+
+    public Medicamento() {
+    }
+
+    public Medicamento(String nombre) {
+        this.nombre = nombre;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -25,22 +33,21 @@ public class Medicamento {
     public String getNombre() {
         return nombre;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         boolean esIgual;
-        
+
         if (obj == null || getClass() != obj.getClass()) {
             esIgual = false;
-        }
-        else {
+        } else {
             final Medicamento other = (Medicamento) obj;
             esIgual = this.id == other.id && this.nombre.equals(other.nombre);
         }
 
         return esIgual;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;

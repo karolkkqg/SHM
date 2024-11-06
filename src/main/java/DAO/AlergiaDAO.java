@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AlergiaDAO {
+
+    // Método para obtener todas las alergias
     public ArrayList<Alergia> obtenerAlergia() throws SQLException {
         ArrayList<Alergia> listaAlergia = new ArrayList<>();
         String consultaSQL = "SELECT id, nombre FROM alergia;";
@@ -23,9 +25,10 @@ public class AlergiaDAO {
         return listaAlergia;
     }
     
-    public ArrayList<Alergia> obtenerAlergiasDelPaciente (int idPaciente) throws SQLException {
+    // Método para obtener las alergias específicas de un paciente
+    public ArrayList<Alergia> obtenerAlergiasDelPaciente(int idPaciente) throws SQLException {
         ArrayList<Alergia> listaAlergias = new ArrayList<>();
-        String consultaSQL = "SELECT id, nombre FROM antecedeAlergias LEFT JOIN alergia ON id_vacuna = id WHERE id_paciente = ?";
+        String consultaSQL = "SELECT a.id, a.nombre FROM antecedenteAlergia aa LEFT JOIN alergia a ON aa.id_alergia = a.id WHERE aa.id_paciente = ?";
         
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
@@ -40,8 +43,9 @@ public class AlergiaDAO {
         return listaAlergias;
     }
     
-    public int agregarAlergiaAlAntecedente (int idPaciente, int idAlergia) throws SQLException {
-        String consultaSQL = "INSERT INTO antecedenteAlergia (id_paciente, id_alergia) VALUES (?,?)";
+    // Método para agregar una alergia al historial de un paciente
+    public int agregarAlergiaAlAntecedente(int idPaciente, int idAlergia) throws SQLException {
+        String consultaSQL = "INSERT INTO antecedenteAlergia (id_paciente, id_alergia) VALUES (?, ?)";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
         consulta.setInt(2, idAlergia);
@@ -52,8 +56,9 @@ public class AlergiaDAO {
         return resultado;
     }
     
-    public int eliminarAlergiaDeAntecedente (int idPaciente, int idAlergia) throws SQLException {
-        String consultaSQL = "DELETE FROM antecedenteAlergia WJERE id_paciente = ? AND id_alergia = ?;";
+    // Método para eliminar una alergia del historial de un paciente
+    public int eliminarAlergiaDeAntecedente(int idPaciente, int idAlergia) throws SQLException {
+        String consultaSQL = "DELETE FROM antecedenteAlergia WHERE id_paciente = ? AND id_alergia = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
         consulta.setInt(2, idAlergia);
@@ -63,8 +68,24 @@ public class AlergiaDAO {
         
         return resultado;
     }
+
+    // Método para verificar si existe un registro de una alergia específica en el historial de un paciente
+    public int verificarRegistroEnAntecedente(int idPaciente, int idAlergia) throws SQLException {
+        String consultaSQL = "SELECT COUNT(*) FROM antecedenteAlergia WHERE id_paciente = ? AND id_alergia = ?";
+        PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
+        consulta.setInt(1, idPaciente);
+        consulta.setInt(2, idAlergia);
+        ResultSet resultado = consulta.executeQuery();
+        resultado.next();
+        int cuenta = resultado.getInt(1);
+        consulta.close();
+        resultado.close();
+        
+        return cuenta;
+    }
     
-    private static Alergia convertirResultSetAlergia (ResultSet resultado) throws SQLException {
+    // Método auxiliar para convertir un ResultSet en un objeto Alergia
+    private static Alergia convertirResultSetAlergia(ResultSet resultado) throws SQLException {
         Alergia alergia = new Alergia();
         alergia.setId(resultado.getInt("id"));
         alergia.setNombre(resultado.getString("nombre"));
