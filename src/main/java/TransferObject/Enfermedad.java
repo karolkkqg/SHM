@@ -10,6 +10,13 @@ public class Enfermedad {
     private int id;
     private String nombre;
 
+    public Enfermedad(){}
+    
+    public Enfermedad(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }

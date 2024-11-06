@@ -53,7 +53,7 @@ public class EnfermedadDAO {
     }
     
     public int eliminarEnfermedadDeAntecedente (int idPaciente, int idEnfermedad) throws SQLException {
-        String consultaSQL = "DELETE FROM antecedenteEnfermedad WJERE id_paciente = ? AND id_enfermedad = ?";
+        String consultaSQL = "DELETE FROM antecedenteEnfermedad WHERE id_paciente = ? AND id_enfermedad = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
         consulta.setInt(2, idEnfermedad);
