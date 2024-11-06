@@ -7,7 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * La clase CirugiaDAO se encarga de ejecutar operaciones relacionadas a las cirugías y el antecedente de cirugías del paciente.
+ * @author epale
+ */
 public class CirugiaDAO {
+    /**
+     * Recupera todas las cirugías de la base de datos.
+     * @return Lista de Ciugias con su id y nombre
+     * @throws SQLException Si ocurre un error en la conexión con la base de datos.
+     */
     public ArrayList<Cirugia> obtenerCirugias() throws SQLException {
         ArrayList<Cirugia> listaCirugias = new ArrayList<>();
         String consultaSQL = "SELECT id, nombre FROM cirugia";
@@ -55,7 +64,7 @@ public class CirugiaDAO {
     }
     
     public int eliminarCirugiaDeAntecedente (int idPaciente, int idCirugia) throws SQLException {
-        String consultaSQL = "DELETE FROM antecedenteCirugia WJERE id_paciente = ? AND id_cirugia = ?";
+        String consultaSQL = "DELETE FROM antecedenteCirugia WHERE id_paciente = ? AND id_cirugia = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
         consulta.setInt(2, idCirugia);

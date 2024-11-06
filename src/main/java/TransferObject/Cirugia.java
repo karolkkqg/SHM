@@ -11,7 +11,15 @@ public class Cirugia {
     private int id;
     private String nombre;
     private Date fechaAplicacion;
+    
+    public Cirugia(){}
 
+    public Cirugia(int id, String nombre, Date fechaAplicacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.fechaAplicacion = fechaAplicacion;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -45,7 +53,7 @@ public class Cirugia {
         }
         else {
             final Cirugia other = (Cirugia) obj;
-            esIgual = this.id == other.id && this.nombre.equals(other.nombre) && this.fechaAplicacion == other.fechaAplicacion;
+            esIgual = this.id == other.id && this.nombre.equals(other.nombre);
         }
 
         return esIgual;

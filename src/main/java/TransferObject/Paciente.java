@@ -18,7 +18,8 @@ public class Paciente {
 
     public Paciente () {}
 
-    public Paciente(String nombre, String apellido, String genero, Date fechaNacimiento, String correo, String contrasena) {
+    public Paciente(int id, String nombre, String apellido, String genero, Date fechaNacimiento, String correo, String contrasena) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.genero = genero;
