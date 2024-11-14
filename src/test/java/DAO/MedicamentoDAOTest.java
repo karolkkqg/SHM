@@ -45,6 +45,23 @@ public class MedicamentoDAOTest {
 
         assertEquals(esperado, resultado);
     }
+    
+    @Test
+    public void testObtenerIdMedicamentoPorNombreExistente() throws Exception {
+        int idIbuprofeno = MEDICAMENTO_DAO.obtenerIdMedicamentoPorNombre("Ibuprofeno");
+        int idParacetamol = MEDICAMENTO_DAO.obtenerIdMedicamentoPorNombre("Paracetamol");
+
+        // Verificamos que los ID obtenidos son correctos
+        assertEquals(MEDICAMENTO_1.getId(), idIbuprofeno);
+        assertEquals(MEDICAMENTO_2.getId(), idParacetamol);
+    }
+
+    @Test
+    public void testObtenerIdMedicamentoPorNombreInexistente() throws Exception {
+        // Verificamos que un medicamento inexistente devuelve -1
+        int idInexistente = MEDICAMENTO_DAO.obtenerIdMedicamentoPorNombre("MedicamentoInexistente");
+        assertEquals(-1, idInexistente);
+    }
 
     @Test
     public void testObtenerMedicamentosDelPaciente() throws Exception {
@@ -65,7 +82,7 @@ public class MedicamentoDAOTest {
     public void testEliminarMedicamentoDeAntecedente() throws Exception {
         MEDICAMENTO_DAO.agregarMedicamentoAlAntecedente(PACIENTE_ID, MEDICAMENTO_2.getId());
 
-        int resultado = MEDICAMENTO_DAO.eliminarVacunaDeAntecedente(PACIENTE_ID, MEDICAMENTO_2.getId());
+        int resultado = MEDICAMENTO_DAO.eliminarMedicamentoDeAntecedente(PACIENTE_ID, MEDICAMENTO_2.getId());
         assertEquals(1, resultado);
 
         int verificacion = MEDICAMENTO_DAO.verificarRegistroEnAntecedente(PACIENTE_ID, MEDICAMENTO_2.getId());

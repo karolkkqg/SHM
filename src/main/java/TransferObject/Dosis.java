@@ -14,6 +14,17 @@ public class Dosis {
     private String cantidad;
     private String metodoAdministracion;
     private String nota;
+    private String nombreMedicamento; // Nuevo atributo para el nombre
+
+    // Getters y Setters
+    public String getNombreMedicamento() {
+        return nombreMedicamento;
+    }
+
+    public void setNombreMedicamento(String nombreMedicamento) {
+        this.nombreMedicamento = nombreMedicamento;
+    }
+    
 
     public int getId() {
         return id;

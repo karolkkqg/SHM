@@ -65,23 +65,23 @@ public class DosisDAO {
      * @throws SQLException en caso de que falle la conexión con la base de datos
      */
     public int agregarDosisAlTratamiento(Dosis dosis) throws SQLException {
-        int resultado = 0;
-        String consultaSQL = "INSERT INTO dosis (id_tratamiento, id_medicamento, dias_duracion, cantidad, metodo_administracion, nota) VALUES (?,?,?,?,?,?)";
+    int resultado = 0;
+    String consultaSQL = "INSERT INTO dosis (id_tratamiento, id_medicamento, dias_duracion, cantidad, metodo_administracion, nota) VALUES (?,?,?,?,?,?)";
 
-        PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
-        consulta.setInt(1, dosis.getIdTratamiento());
-        consulta.setInt(2, dosis.getIdMedicamento());
-        consulta.setInt(3, dosis.getDiasDuracion());
-        consulta.setString(4, dosis.getCantidad());
-        consulta.setString(5, dosis.getMetodoAdministracion());
-        consulta.setString(6, dosis.getNota());
+    PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
+    consulta.setInt(1, dosis.getIdTratamiento());
+    consulta.setInt(2, dosis.getIdMedicamento());
+    consulta.setInt(3, dosis.getDiasDuracion());
+    consulta.setString(4, dosis.getCantidad());
+    consulta.setString(5, dosis.getMetodoAdministracion());
+    consulta.setString(6, dosis.getNota());
 
-        resultado = consulta.executeUpdate();
-        consulta.close();
-        ConexionBaseDatos.desconectar();
-        
-        return resultado;
-    }
+    resultado = consulta.executeUpdate();
+    consulta.close();
+    ConexionBaseDatos.desconectar();
+    
+    return resultado;
+}
 
     /**
      * Elimina una dosis de un tratamiento
@@ -128,6 +128,74 @@ public class DosisDAO {
         
         return resultado;
     }
+    
+    public int obtenerIdDosis(int idMedicamento, int diasDuracion, String cantidad, String metodoAdministracion, String nota) throws SQLException {
+    int idDosis = -1;
+    String consultaSQL = "SELECT id FROM dosis WHERE id_medicamento = ? AND dias_duracion = ? AND cantidad = ? AND metodo_administracion = ? AND nota = ?";
+
+    PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
+    consulta.setInt(1, idMedicamento);
+    consulta.setInt(2, diasDuracion);
+    consulta.setString(3, cantidad);
+    consulta.setString(4, metodoAdministracion);
+    consulta.setString(5, nota);
+
+    ResultSet resultado = consulta.executeQuery();
+    
+    // Si se encuentra una dosis que coincide con los criterios, se guarda el id
+    if (resultado.next()) {
+        idDosis = resultado.getInt("id");
+    }
+
+    consulta.close();
+    resultado.close();
+    ConexionBaseDatos.desconectar();
+
+    return idDosis; // Regresa -1 si no se encontró la dosis
+}
+
+    public int obtenerIdTratamiento(int idMedicamento, int diasDuracion, String cantidad, String metodoAdministracion, String nota) throws SQLException {
+    int idTratamiento = -1;
+    String consultaSQL = "SELECT id_tratamiento FROM dosis WHERE id_medicamento = ? AND dias_duracion = ? AND cantidad = ? AND metodo_administracion = ? AND nota = ?";
+
+    PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
+    consulta.setInt(1, idMedicamento);
+    consulta.setInt(2, diasDuracion);
+    consulta.setString(3, cantidad);
+    consulta.setString(4, metodoAdministracion);
+    consulta.setString(5, nota);
+
+    ResultSet resultado = consulta.executeQuery();
+    
+    // Si se encuentra una dosis que coincide con los criterios, se obtiene el id_tratamiento
+    if (resultado.next()) {
+        idTratamiento = resultado.getInt("id_tratamiento");
+    }
+
+    consulta.close();
+    resultado.close();
+    ConexionBaseDatos.desconectar();
+
+    return idTratamiento; // Regresa -1 si no se encontró el tratamiento
+}
+
+    public int actualizarDosis(Dosis dosis) throws SQLException {
+    int resultado = 0;
+    String consultaSQL = "UPDATE dosis SET dias_duracion = ?, cantidad = ?, metodo_administracion = ?, nota = ? WHERE id_tratamiento = ?";
+
+    PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
+    consulta.setInt(1, dosis.getDiasDuracion());
+    consulta.setString(2, dosis.getCantidad());
+    consulta.setString(3, dosis.getMetodoAdministracion());
+    consulta.setString(4, dosis.getNota());
+    consulta.setInt(5, dosis.getIdTratamiento()); // El ID de la dosis para especificar la fila a actualizar
+
+    resultado = consulta.executeUpdate();
+    consulta.close();
+    ConexionBaseDatos.desconectar();
+    
+    return resultado;
+}
 
     /**
      * Convierte un ResultSet en un objeto Dosis

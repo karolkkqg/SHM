@@ -24,6 +24,25 @@ public class MedicamentoDAO {
         return listaMedicamentos;
     }
     
+    public int obtenerIdMedicamentoPorNombre(String nombre) throws SQLException {
+        String consultaSQL = "SELECT id FROM medicamento WHERE nombre = ?";
+        int idMedicamento = -1;
+
+        PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
+        consulta.setString(1, nombre);
+        
+        ResultSet resultado = consulta.executeQuery();
+        if (resultado.next()) {
+            idMedicamento = resultado.getInt("id");
+        }
+        
+        consulta.close();
+        resultado.close();
+        ConexionBaseDatos.desconectar();
+
+        return idMedicamento;
+    }
+    
     public ArrayList<Medicamento> obtenerMedicamentosDelPaciente(int idPaciente) throws SQLException {
         ArrayList<Medicamento> listaMedicamentos = new ArrayList<>();
         String consultaSQL = "SELECT m.id, m.nombre FROM antecedenteMedicamento am LEFT JOIN medicamento m ON am.id_medicamento = m.id WHERE am.id_paciente = ?";
@@ -53,7 +72,7 @@ public class MedicamentoDAO {
         return resultado;
     }
     
-    public int eliminarVacunaDeAntecedente(int idPaciente, int idMedicamento) throws SQLException {
+    public int eliminarMedicamentoDeAntecedente(int idPaciente, int idMedicamento) throws SQLException {
         String consultaSQL = "DELETE FROM antecedenteMedicamento WHERE id_paciente = ? AND id_medicamento = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
