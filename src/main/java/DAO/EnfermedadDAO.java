@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EnfermedadDAO {
+    /**
+     * Regresa una lista con todas las enfermedades registradas en la base de datos
+     * @return Lista de objetos Enfermedad con su id y nombre
+     * @throws SQLException 
+     */
     public ArrayList<Enfermedad> obtenerEnfermedades() throws SQLException {
         ArrayList<Enfermedad> listaEnfermedades = new ArrayList<>();
         String consultaSQL = "SELECT id, nombre FROM enfermedad";
@@ -52,6 +57,13 @@ public class EnfermedadDAO {
         return resultado;
     }
     
+    /**
+     * Elimina una enfermedad del antecedente médico del paciente
+     * @param idPaciente
+     * @param idEnfermedad
+     * @return 1 si la operación fue exitosa, 0 si no lo fue
+     * @throws SQLException 
+     */
     public int eliminarEnfermedadDeAntecedente (int idPaciente, int idEnfermedad) throws SQLException {
         String consultaSQL = "DELETE FROM antecedenteEnfermedad WHERE id_paciente = ? AND id_enfermedad = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
