@@ -1,6 +1,8 @@
 package TransferObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,6 +13,7 @@ public class Tratamiento {
     private int id;
     private int idPaciente;
     private Date fechaInicio;
+     private List<Dosis> dosisList = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -34,6 +37,14 @@ public class Tratamiento {
 
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+    
+    public List<Dosis> getDosisList() {
+        return dosisList;
+    }
+
+    public void agregarDosis(Dosis dosis) {
+        dosisList.add(dosis);
     }
 
     @Override
