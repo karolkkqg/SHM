@@ -1,6 +1,7 @@
 package UserInterface.Plantillas;
 
 import UserInterface.RegistroAntecedente;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,18 +18,23 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
     }
     
     private TipoAntecedente tipoAntecedente;
-    private int idAntecedente;
-    private int idPaciente = 20;
-    RegistroAntecedente panelPadre;
+    private final int idAntecedente;
+    private java.util.Date fechaAplicacion;
+    private RegistroAntecedente panelPadre;
     
-    public PlantillaAntecedente(RegistroAntecedente panelPadre, TipoAntecedente tipoAntecedente, int idAntecedente, String nombreAntecedente, String fecha) {
+    private int idPaciente = 26;
+    
+    public PlantillaAntecedente(RegistroAntecedente panelPadre, TipoAntecedente tipoAntecedente, int idAntecedente, String nombreAntecedente, java.util.Date fecha) {
         initComponents();
         this.panelPadre = panelPadre;
         this.tipoAntecedente = tipoAntecedente;
         this.idAntecedente = idAntecedente;
         this.LabelNombre.setText(nombreAntecedente);
         if (fecha != null) {
-            this.LabelFecha.setText(fecha);
+            this.LabelFechaRegistro.setText("Fecha de aplicación:");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd / MM / yyyy");
+            this.LabelFecha.setText(sdf.format(fecha));
+            this.fechaAplicacion = fecha;
         }
     }
 
@@ -45,7 +51,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         }
         
         if (resultado == 1) {
-            JOptionPane.showMessageDialog(null, "La enfermedad fue borrada de su antecedente exitosamente", "Operación exitosa", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, "La enfermedad fue borrada de su antecedente exitosamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
         }
         else if (resultado == 0) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar eliminar la enfermedad", "Operación fallida", JOptionPane.ERROR_MESSAGE);
@@ -53,19 +59,83 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
     }
     
     private void eliminarAntecedenteAlergia() {
+        DAO.AlergiaDAO alergiaDAO = new DAO.AlergiaDAO();
+        int resultado;
         
+        try {
+            resultado = alergiaDAO.eliminarAlergiaDeAntecedente(this.idPaciente, this.idAntecedente);
+        } catch (java.sql.SQLException error) {
+            //TODO: loggear excepcion
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            resultado = -1;
+        }
+        
+        if (resultado == 1) {
+            JOptionPane.showMessageDialog(null, "La alergia fue borrada de su antecedente exitosamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (resultado == 0) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar eliminar la alergia", "Operación fallida", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void eliminarAntecedenteVacuna() {
+        DAO.VacunaDAO vacunaDAO = new DAO.VacunaDAO();
+        int resultado;
         
+        try {
+            resultado = vacunaDAO.eliminarVacunaDeAntecedente(this.idPaciente, this.idAntecedente, new java.sql.Date(this.fechaAplicacion.getTime()));
+        } catch (java.sql.SQLException error) {
+            //TODO: loggear excepcion
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            resultado = -1;
+        }
+        
+        if (resultado >= 1) {
+            JOptionPane.showMessageDialog(null, "La vacuna fue borrada de su antecedente exitosamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (resultado == 0) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar eliminar la vacuna", "Operación fallida", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void eliminarAntecedenteCirugia() {
+        DAO.CirugiaDAO cirugiaDAO = new DAO.CirugiaDAO();
+        int resultado;
         
+        try {
+            resultado = cirugiaDAO.eliminarCirugiaDeAntecedente(this.idPaciente, this.idAntecedente, new java.sql.Date(this.fechaAplicacion.getTime()));
+        } catch (java.sql.SQLException error) {
+            //TODO: loggear excepcion
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            resultado = -1;
+        }
+        
+        if (resultado >= 1) {
+            JOptionPane.showMessageDialog(null, "La cirugia fue borrada de su antecedente exitosamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (resultado == 0) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar eliminar la cirugia", "Operación fallida", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void eliminarAntecedenteMedicamento() {
+        DAO.MedicamentoDAO medicamentoDAO = new DAO.MedicamentoDAO();
+        int resultado;
         
+        try {
+            resultado = medicamentoDAO.eliminarMedicamentoDeAntecedente(this.idPaciente, this.idAntecedente);
+        } catch (java.sql.SQLException error) {
+            //TODO: loggear excepcion
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            resultado = -1;
+        }
+        
+        if (resultado >= 1) {
+            JOptionPane.showMessageDialog(null, "El medicamento fue borrado de su antecedente exitosamente", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (resultado == 0) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar eliminar el medicamento", "Operación fallida", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     /**
@@ -91,11 +161,11 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(650, 85));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBackground(new java.awt.Color(181, 220, 255));
+        jPanel2.setBackground(new java.awt.Color(229, 242, 255));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 4, true));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(181, 220, 255));
+        jPanel1.setBackground(new java.awt.Color(229, 242, 255));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         LabelFecha.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -105,7 +175,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
 
         LabelFechaRegistro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LabelFechaRegistro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LabelFechaRegistro.setText("Fecha de registro: ");
+        LabelFechaRegistro.setText("Fecha de ocurrencia: ");
         LabelFechaRegistro.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 0, 0));
         jPanel1.add(LabelFechaRegistro, java.awt.BorderLayout.PAGE_START);
 
@@ -118,6 +188,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         LabelNombre.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(LabelNombre, java.awt.BorderLayout.PAGE_START);
 
+        jButton1.setBackground(new java.awt.Color(181, 220, 255));
         jButton1.setText("Quitar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,10 +206,22 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
                 eliminarAntecedenteEnfermedad();
                 this.panelPadre.recuperarAntecedenteEnfermedades();
             }
-            case Alergia -> eliminarAntecedenteAlergia();
-            case Vacuna -> eliminarAntecedenteVacuna();
-            case Cirugia -> eliminarAntecedenteCirugia();
-            case Medicamento -> eliminarAntecedenteMedicamento();
+            case Alergia -> {
+                eliminarAntecedenteAlergia();
+                this.panelPadre.recuperarAntecedenteAlergias();
+            }
+            case Vacuna -> {
+                eliminarAntecedenteVacuna();
+                this.panelPadre.recuperarAntecedenteVacunas();
+            }
+            case Cirugia -> {
+                eliminarAntecedenteCirugia();
+                this.panelPadre.recuperarAntecedenteCirugias();
+            }
+            case Medicamento -> {
+                eliminarAntecedenteMedicamento();
+                this.panelPadre.recuperarAntecedenteMedicamentos();
+            }
             default -> {break;}
         }
     }//GEN-LAST:event_jButton1ActionPerformed

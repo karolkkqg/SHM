@@ -63,11 +63,12 @@ public class CirugiaDAO {
         return resultado;
     }
     
-    public int eliminarCirugiaDeAntecedente (int idPaciente, int idCirugia) throws SQLException {
-        String consultaSQL = "DELETE FROM antecedenteCirugia WHERE id_paciente = ? AND id_cirugia = ?";
+    public int eliminarCirugiaDeAntecedente (int idPaciente, int idCirugia, Date fechaAplicacion) throws SQLException {
+        String consultaSQL = "DELETE FROM antecedenteCirugia WHERE id_paciente = ? AND id_cirugia = ? AND fecha_aplicacion = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
         consulta.setInt(2, idCirugia);
+        consulta.setDate(3, fechaAplicacion);
         int resultado = consulta.executeUpdate();
         consulta.close();
         ConexionBaseDatos.desconectar();

@@ -81,14 +81,16 @@ public class VacunaDAO {
      * Elimina una vacuna del antecedente del paciente
      * @param idPaciente
      * @param idVacuna
+     * @param fechaAplicacion
      * @return 1 si la operación fue exitosa, de otra manera 0.
      * @throws SQLException Si ocurre un error en la conexión a la base de datos.
      */
-    public int eliminarVacunaDeAntecedente (int idPaciente, int idVacuna) throws SQLException {
-        String consultaSQL = "DELETE FROM antecedenteVacuna WHERE id_paciente = ? AND id_vacuna = ?";
+    public int eliminarVacunaDeAntecedente (int idPaciente, int idVacuna, Date fechaAplicacion) throws SQLException {
+        String consultaSQL = "DELETE FROM antecedenteVacuna WHERE id_paciente = ? AND id_vacuna = ? AND fecha_aplicacion = ?";
         PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
         consulta.setInt(1, idPaciente);
         consulta.setInt(2, idVacuna);
+        consulta.setDate(3, fechaAplicacion);
         int resultado = consulta.executeUpdate();
         consulta.close();
         ConexionBaseDatos.desconectar();
