@@ -14,8 +14,8 @@ import org.junit.Before;
 
 public class VacunaDAOTest {
     private static final VacunaDAO VACUNA_DAO = new VacunaDAO();
-    private static final Vacuna VACUNA_1 = new Vacuna("covid-19");
-    private static final Vacuna VACUNA_2 = new Vacuna("influenza");
+    private static final Vacuna VACUNA_1 = new Vacuna(1,"covid-19", java.sql.Date.valueOf("2024-05-11"));
+    private static final Vacuna VACUNA_2 = new Vacuna(2,"influenza", java.sql.Date.valueOf("2024-05-11"));
     private static final Paciente PACIENTE_1 = new Paciente(1,"Emmanuel","Pale","masculino",java.sql.Date.valueOf("2024-07-04"),"correo@gmail.com","123");
     
     @BeforeClass
@@ -143,7 +143,7 @@ public class VacunaDAOTest {
     @Test
     public void testEliminarVacunaDeAntecedente() throws Exception {
         int esperado = 1;
-        int resultado = VACUNA_DAO.eliminarVacunaDeAntecedente(1, 1);
+        int resultado = VACUNA_DAO.eliminarVacunaDeAntecedente(1, 1, VACUNA_1.getFechaAplicacion());
         assertEquals(esperado,resultado);
     }
     

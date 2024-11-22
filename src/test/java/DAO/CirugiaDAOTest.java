@@ -143,7 +143,7 @@ public class CirugiaDAOTest {
     @Test
     public void testEliminarCirugiaDeAntecedente() throws Exception {
         int esperado = 1;
-        int resultado = CIRUGIA_DAO.eliminarCirugiaDeAntecedente(PACIENTE_1.getId(), CIRUGIA_1.getId());
+        int resultado = CIRUGIA_DAO.eliminarCirugiaDeAntecedente(PACIENTE_1.getId(), CIRUGIA_1.getId(), CIRUGIA_1.getFechaAplicacion());
         assertEquals(esperado,resultado);
     }
 }

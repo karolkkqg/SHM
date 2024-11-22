@@ -10,8 +10,10 @@ public class Vacuna {
 
     public Vacuna () {}
     
-    public Vacuna(String nombre) {
+    public Vacuna(int id, String nombre, Date fecha) {
+        this.id = id;
         this.nombre = nombre;
+        this.fechaAplicacion = fecha;
     }
     
     public void setId(int id) {
