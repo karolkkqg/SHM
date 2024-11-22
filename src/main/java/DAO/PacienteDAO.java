@@ -12,6 +12,25 @@ import java.util.ArrayList;
  */
 public class PacienteDAO {
 
+	public boolean credencialesValidas(String correo, String contrasena) throws SQLException{
+		boolean sonValidas;
+
+		String consultaSQL = "SELECT 1 FROM Paciente WHERE correo = (?) AND contrasena=(SHA2(?,256))";
+
+		PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
+		consulta.setString(1, correo);
+		consulta.setString(2, contrasena);
+
+		ResultSet resultado = consulta.executeQuery();
+		sonValidas = resultado.next();
+
+		consulta.close();
+		resultado.close();
+		ConexionBaseDatos.desconectar();
+
+		return sonValidas;
+	}
+    
 	/**
 	 * Obtiene todos los pacientes de la base de datos
 	 * @return lista de todos los pacientes registrados en la base de datos
@@ -66,7 +85,7 @@ public class PacienteDAO {
 	 */
 	public int agregarPaciente(Paciente paciente) throws SQLException {
 		int resultado = 0;
-		String consultaSQL = "INSERT INTO paciente (nombre, apellido, genero, fecha_nacimiento, correo, contrasena) VALUES (?, ?, ?, ?, ?, ?);";
+		String consultaSQL = "INSERT INTO paciente (nombre, apellido, genero, fecha_nacimiento, correo, contrasena) VALUES (?, ?, ?, ?, ?, SHA2(?,256));";
 
 		PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
 		consulta.setString(1, paciente.getNombre());
