@@ -15,7 +15,7 @@ public class PacienteDAO {
 	public boolean credencialesValidas(String correo, String contrasena) throws SQLException{
 		boolean sonValidas;
 
-		String consultaSQL = "SELECT 1 FROM Paciente WHERE correo = (?) AND contrasena=(SHA2(?,256))";
+		String consultaSQL = "SELECT * FROM Paciente WHERE correo = ? AND contrasena=(SHA2(?,256))";
 
 		PreparedStatement consulta = ConexionBaseDatos.getInstancia().prepareStatement(consultaSQL);
 		consulta.setString(1, correo);

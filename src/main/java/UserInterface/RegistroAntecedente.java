@@ -31,7 +31,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
     private ArrayList<Alergia> antecedenteAlergias;
     private ArrayList<Medicamento> antecedenteMedicamentos;
     
-    private int idPaciente = 26;
+    private final BussinesLogic.SessionDetails PACIENTE = BussinesLogic.SessionDetails.getInstance();
     
     public RegistroAntecedente() {
         initComponents();
@@ -165,7 +165,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         EnfermedadDAO enfermedadDAO = new EnfermedadDAO();
         
         try {
-           this.antecedenteEnfermedades = enfermedadDAO.obtenerEnfermedadesDelPaciente(this.idPaciente);
+           this.antecedenteEnfermedades = enfermedadDAO.obtenerEnfermedadesDelPaciente(this.PACIENTE.getId());
         } catch (SQLException error) {
             //TODO: registrar excepción
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -185,7 +185,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         AlergiaDAO alergiaDAO = new AlergiaDAO();
         
         try {
-            this.antecedenteAlergias = alergiaDAO.obtenerAlergiasDelPaciente(this.idPaciente);
+            this.antecedenteAlergias = alergiaDAO.obtenerAlergiasDelPaciente(this.PACIENTE.getId());
         } catch (SQLException error) {
             //TODO: registrar excepción
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -206,7 +206,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         ArrayList<Vacuna> antecedente = new ArrayList<>();
         
         try {
-            antecedente = vacunaDAO.obtenerVacunasDelPaciente(this.idPaciente);
+            antecedente = vacunaDAO.obtenerVacunasDelPaciente(this.PACIENTE.getId());
         } catch (SQLException error) {
             //TODO: registrar excepción
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -225,7 +225,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         ArrayList<Cirugia> antecedente = new ArrayList<>();
         
         try {
-            antecedente = cirugiaDAO.obtenerCirugiasDelPaciente(this.idPaciente);
+            antecedente = cirugiaDAO.obtenerCirugiasDelPaciente(this.PACIENTE.getId());
         } catch (SQLException error) {
             //TODO: manejar excepción
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -243,7 +243,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         MedicamentoDAO medicamentoDAO = new MedicamentoDAO();
         
         try {
-            this.antecedenteMedicamentos = medicamentoDAO.obtenerMedicamentosDelPaciente(this.idPaciente);
+            this.antecedenteMedicamentos = medicamentoDAO.obtenerMedicamentosDelPaciente(this.PACIENTE.getId());
         } catch (SQLException error) {
             //TODO: registrar excepción
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -1023,7 +1023,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
             int resultado;
                 
             try {
-                resultado = enfermedadDAO.agregarEnfermedadAlAntecedente(this.idPaciente, this.listaEnfermedades.get(indiceSeleccionado - 1).getId());
+                resultado = enfermedadDAO.agregarEnfermedadAlAntecedente(this.PACIENTE.getId(), this.listaEnfermedades.get(indiceSeleccionado - 1).getId());
             } catch (SQLException error) {
                 //TODO: manejar excepción
                 JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -1053,7 +1053,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
             int resultado;
                 
             try {
-                resultado = alergiaDAO.agregarAlergiaAlAntecedente(this.idPaciente, this.listaAlergias.get(indiceSeleccionado - 1).getId());
+                resultado = alergiaDAO.agregarAlergiaAlAntecedente(this.PACIENTE.getId(), this.listaAlergias.get(indiceSeleccionado - 1).getId());
             } catch (SQLException error) {
                 //TODO: manejar excepción
                 JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -1088,7 +1088,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
             int resultado;
             
             try {
-                resultado = vacunaDAO.agregarVacunaAlAntecedente(this.idPaciente, this.listaVacunas.get(indiceSeleccionado - 1).getId(), new java.sql.Date(fechaVacunacion.getTime()));
+                resultado = vacunaDAO.agregarVacunaAlAntecedente(this.PACIENTE.getId(), this.listaVacunas.get(indiceSeleccionado - 1).getId(), new java.sql.Date(fechaVacunacion.getTime()));
             } catch (SQLException error) {
                 //TODO: manejar excepción
                 JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -1121,7 +1121,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
             int resultado;
             
             try {
-                resultado = cirugiaDAO.agregarCirugiaAlAntecedente(this.idPaciente, this.listaCirugias.get(indiceSeleccionado - 1).getId(), new java.sql.Date(fechaCirugia.getTime()));
+                resultado = cirugiaDAO.agregarCirugiaAlAntecedente(this.PACIENTE.getId(), this.listaCirugias.get(indiceSeleccionado - 1).getId(), new java.sql.Date(fechaCirugia.getTime()));
             } catch (SQLException error) {
                 //TODO: manejar excepción
                 JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -1149,7 +1149,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
             int resultado;
                 
             try {
-                resultado = medicamentoDAO.agregarMedicamentoAlAntecedente(this.idPaciente, this.listaMedicamentos.get(indiceSeleccionado - 1).getId());
+                resultado = medicamentoDAO.agregarMedicamentoAlAntecedente(this.PACIENTE.getId(), this.listaMedicamentos.get(indiceSeleccionado - 1).getId());
             } catch (SQLException error) {
                 //TODO: manejar excepción
                 JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);

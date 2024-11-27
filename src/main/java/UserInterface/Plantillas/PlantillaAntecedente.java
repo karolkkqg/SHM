@@ -22,7 +22,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
     private java.util.Date fechaAplicacion;
     private RegistroAntecedente panelPadre;
     
-    private int idPaciente = 26;
+    private final BussinesLogic.SessionDetails PACIENTE = BussinesLogic.SessionDetails.getInstance();
     
     public PlantillaAntecedente(RegistroAntecedente panelPadre, TipoAntecedente tipoAntecedente, int idAntecedente, String nombreAntecedente, java.util.Date fecha) {
         initComponents();
@@ -43,7 +43,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         int resultado;
         
         try {
-            resultado = enfermedadDAO.eliminarEnfermedadDeAntecedente(this.idPaciente, this.idAntecedente);
+            resultado = enfermedadDAO.eliminarEnfermedadDeAntecedente(this.PACIENTE.getId(), this.idAntecedente);
         } catch (java.sql.SQLException error) {
             //TODO: loggear excepcion
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -63,7 +63,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         int resultado;
         
         try {
-            resultado = alergiaDAO.eliminarAlergiaDeAntecedente(this.idPaciente, this.idAntecedente);
+            resultado = alergiaDAO.eliminarAlergiaDeAntecedente(this.PACIENTE.getId(), this.idAntecedente);
         } catch (java.sql.SQLException error) {
             //TODO: loggear excepcion
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -83,7 +83,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         int resultado;
         
         try {
-            resultado = vacunaDAO.eliminarVacunaDeAntecedente(this.idPaciente, this.idAntecedente, new java.sql.Date(this.fechaAplicacion.getTime()));
+            resultado = vacunaDAO.eliminarVacunaDeAntecedente(this.PACIENTE.getId(), this.idAntecedente, new java.sql.Date(this.fechaAplicacion.getTime()));
         } catch (java.sql.SQLException error) {
             //TODO: loggear excepcion
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -103,7 +103,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         int resultado;
         
         try {
-            resultado = cirugiaDAO.eliminarCirugiaDeAntecedente(this.idPaciente, this.idAntecedente, new java.sql.Date(this.fechaAplicacion.getTime()));
+            resultado = cirugiaDAO.eliminarCirugiaDeAntecedente(this.PACIENTE.getId(), this.idAntecedente, new java.sql.Date(this.fechaAplicacion.getTime()));
         } catch (java.sql.SQLException error) {
             //TODO: loggear excepcion
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);
@@ -123,7 +123,7 @@ public class PlantillaAntecedente extends javax.swing.JPanel {
         int resultado;
         
         try {
-            resultado = medicamentoDAO.eliminarMedicamentoDeAntecedente(this.idPaciente, this.idAntecedente);
+            resultado = medicamentoDAO.eliminarMedicamentoDeAntecedente(this.PACIENTE.getId(), this.idAntecedente);
         } catch (java.sql.SQLException error) {
             //TODO: loggear excepcion
             JOptionPane.showMessageDialog(null, "Ocurrió un error, vuelva a intentarlo más tarde", "Error de conexión", JOptionPane.ERROR_MESSAGE);

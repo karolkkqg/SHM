@@ -5,8 +5,8 @@ package BussinesLogic;
  */
 
 public class SHM {
-
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        UserInterface.LogIn login = new UserInterface.LogIn();
+        login.setVisible(true);
     }
 }

@@ -183,7 +183,7 @@ public class LogIn extends javax.swing.JFrame {
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         try {
             PacienteDAO pacienteDAO = new PacienteDAO();
-            continuaLogin(pacienteDAO.credencialesValidas(txtCorreo.getText(), Arrays.toString(pswdContrasena.getPassword())));
+            continuaLogin(pacienteDAO.credencialesValidas(txtCorreo.getText(), new String(pswdContrasena.getPassword())));
         } catch (SQLException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos, inténtelo de nuevo más tarde.", "Error de conexión", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
@@ -223,7 +223,13 @@ public class LogIn extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new LogIn().setVisible(true);
+            }
+        });//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
@@ -245,12 +251,6 @@ public class LogIn extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LogIn().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
