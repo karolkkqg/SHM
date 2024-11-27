@@ -23,6 +23,7 @@ public class LogIn extends javax.swing.JFrame {
      */
     public LogIn() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -215,7 +216,9 @@ public class LogIn extends javax.swing.JFrame {
     }
     
     private void mostrarSiguienteVentana() throws IOException {
-        // -- Mostrar la ventana que corresponda -- //
+        Menu menuPrincipal = new Menu();
+        menuPrincipal.setVisible(true);
+        this.dispose();
     }
     
     /**

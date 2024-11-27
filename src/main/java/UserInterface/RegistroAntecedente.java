@@ -32,8 +32,10 @@ public class RegistroAntecedente extends javax.swing.JFrame {
     private ArrayList<Medicamento> antecedenteMedicamentos;
     
     private final BussinesLogic.SessionDetails PACIENTE = BussinesLogic.SessionDetails.getInstance();
+    private final javax.swing.JFrame VENTANA_ANTERIOR;
     
-    public RegistroAntecedente() {
+    public RegistroAntecedente(javax.swing.JFrame ventanaAnterior) {
+        this.VENTANA_ANTERIOR = ventanaAnterior;
         initComponents();
         
         recuperarAntecedenteEnfermedades();
@@ -46,6 +48,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         llenarComboBoxCirugias();
         
         agregarRestriccionesDateChooser();
+        setLocationRelativeTo(null);
     }
     
     private void llenarComboBoxEnfermedades() {
@@ -275,7 +278,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
 
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        ButtonRegresar = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         PanelEnfermedades = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -345,6 +348,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Antecedente médico");
         setBackground(new java.awt.Color(102, 204, 255));
+        setUndecorated(true);
         setResizable(false);
 
         jPanel8.setBackground(new java.awt.Color(70, 141, 212));
@@ -359,10 +363,17 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel8.add(jLabel3, java.awt.BorderLayout.CENTER);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setText("<---");
-        jButton1.setToolTipText("");
-        jPanel8.add(jButton1, java.awt.BorderLayout.LINE_START);
+        ButtonRegresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ButtonRegresar.setIcon(new javax.swing.ImageIcon("src/main/java/UserInterface/Recursos/icono_regresar.png"));
+        ButtonRegresar.setToolTipText("");
+        ButtonRegresar.setBorderPainted(false);
+        ButtonRegresar.setContentAreaFilled(false);
+        ButtonRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRegresarActionPerformed(evt);
+            }
+        });
+        jPanel8.add(ButtonRegresar, java.awt.BorderLayout.LINE_START);
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setForeground(new java.awt.Color(0, 0, 0));
@@ -1002,7 +1013,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1167,37 +1178,11 @@ public class RegistroAntecedente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BotonAgregarMedicamentoActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistroAntecedente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistroAntecedente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistroAntecedente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistroAntecedente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void ButtonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegresarActionPerformed
+        this.VENTANA_ANTERIOR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ButtonRegresarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistroAntecedente().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonAgregarAlergia;
@@ -1205,6 +1190,7 @@ public class RegistroAntecedente extends javax.swing.JFrame {
     private javax.swing.JButton BotonAgregarEnfermedad;
     private javax.swing.JButton BotonAgregarMedicamento;
     private javax.swing.JButton BotonAgregarVacuna;
+    private javax.swing.JButton ButtonRegresar;
     private javax.swing.JComboBox<String> ComboBoxAlergias;
     private javax.swing.JComboBox<String> ComboBoxCirugias;
     private javax.swing.JComboBox<String> ComboBoxEnfermedades;
@@ -1227,7 +1213,6 @@ public class RegistroAntecedente extends javax.swing.JFrame {
     private javax.swing.JPanel PanelEnfermedades;
     private javax.swing.JPanel PanelMedicamentos;
     private javax.swing.JPanel PanelVacunas;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
