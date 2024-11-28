@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package UserInterface;
 
 import DAO.DosisDAO;
@@ -19,12 +15,10 @@ import javax.swing.JOptionPane;
  * @author kahun
  */
 public class RegistroTratamientoMedico extends javax.swing.JFrame {
-
-    /**
-     * Creates new form RegistroTratamientoMedico
-     */
-    public RegistroTratamientoMedico() {
-
+    private final javax.swing.JFrame VENTANA_ANTERIOR;
+    
+    public RegistroTratamientoMedico(javax.swing.JFrame panelAnterior) {
+        this.VENTANA_ANTERIOR = panelAnterior;
         initComponents();
         cargarMedicamentoComboBox();
         cargarComboBoxMetodosAdministracion();
@@ -70,7 +64,7 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
             }
 
             // ID del paciente, ajusta este valor según tu lógica de negocio
-            int idPaciente = 1;
+            int idPaciente = BussinesLogic.SessionDetails.getInstance().getId();
 
             // Guardar el tratamiento y obtener el ID
             int idTratamiento = guardarTratamiento(fechaInicio, idPaciente);
@@ -127,7 +121,7 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
         Dosis dosis = new Dosis();
         dosis.setIdTratamiento(idTratamiento);
         dosis.setIdMedicamento(idMedicamento);
-        dosis.setDiasDuracion(Integer.parseInt(txtDuracion.getText()));
+        dosis.setDiasDuracion((int)this.SpinnerDuracion.getValue());
         dosis.setCantidad(txtCantidad.getText());
         dosis.setMetodoAdministracion((String) cmbMetodoAdministracion.getSelectedItem());
         dosis.setNota(txtaNota.getText());
@@ -166,17 +160,20 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cmbMedicamentos = new javax.swing.JComboBox<>();
-        txtDuracion = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
         cmbMetodoAdministracion = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtaNota = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jdcFechaInicio = new com.toedter.calendar.JDateChooser();
+        SpinnerDuracion = new javax.swing.JSpinner();
+        lblDuracion1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblRegistrarTratamiento = new javax.swing.JLabel();
+        ButtonRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(java.awt.Color.white);
 
@@ -209,12 +206,6 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
 
         cmbMedicamentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        txtDuracion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDuracionActionPerformed(evt);
-            }
-        });
-
         cmbMetodoAdministracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbMetodoAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,6 +226,9 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
             }
         });
 
+        lblDuracion1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblDuracion1.setText("días");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -249,14 +243,20 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel1)
                                     .addComponent(lblFechaInicio)
-                                    .addComponent(lblDuracion)
-                                    .addComponent(txtDuracion)
-                                    .addComponent(jdcFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                                    .addComponent(jdcFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(lblDuracion)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addComponent(SpinnerDuracion, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblDuracion1)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblMedicamento)
                                     .addComponent(lblCantidad)
@@ -265,7 +265,7 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(182, 182, 182))))
+                        .addGap(121, 121, 121))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,20 +290,21 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
                     .addComponent(lblCantidad)
                     .addComponent(lblDuracion))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(txtDuracion))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SpinnerDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDuracion1))
                 .addGap(40, 40, 40)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(cmbMetodoAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109))
+                .addGap(52, 52, 52))
         );
 
         jPanel2.setBackground(new java.awt.Color(70, 141, 212));
@@ -313,36 +314,51 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
         lblRegistrarTratamiento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRegistrarTratamiento.setText("Registrar tratamiento");
 
+        ButtonRegresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ButtonRegresar.setIcon(new javax.swing.ImageIcon("src/main/java/UserInterface/Recursos/icono_regresar.png"));
+        ButtonRegresar.setToolTipText("");
+        ButtonRegresar.setBorderPainted(false);
+        ButtonRegresar.setContentAreaFilled(false);
+        ButtonRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ButtonRegresar)
+                .addGap(227, 227, 227)
                 .addComponent(lblRegistrarTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(395, 395, 395))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblRegistrarTratamiento)
-                .addGap(65, 65, 65))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ButtonRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblRegistrarTratamiento, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -353,10 +369,6 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void txtDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDuracionActionPerformed
-
     private void cmbMetodoAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMetodoAdministracionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbMetodoAdministracionActionPerformed
@@ -365,42 +377,15 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
         guardarTratamientoConDosis();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistroTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistroTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistroTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistroTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void ButtonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegresarActionPerformed
+        this.VENTANA_ANTERIOR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ButtonRegresarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistroTratamientoMedico().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonRegresar;
+    private javax.swing.JSpinner SpinnerDuracion;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbMedicamentos;
     public javax.swing.JComboBox<String> cmbMetodoAdministracion;
@@ -413,11 +398,11 @@ public class RegistroTratamientoMedico extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jdcFechaInicio;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblDuracion;
+    private javax.swing.JLabel lblDuracion1;
     private javax.swing.JLabel lblFechaInicio;
     private javax.swing.JLabel lblMedicamento;
     private javax.swing.JLabel lblRegistrarTratamiento;
     private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextArea txtaNota;
     // End of variables declaration//GEN-END:variables
 }
