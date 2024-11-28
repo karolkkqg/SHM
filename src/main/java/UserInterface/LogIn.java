@@ -192,6 +192,9 @@ public class LogIn extends javax.swing.JFrame {
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
         // TODO: Mostrar la ventana de registro de paciente
+        RegistrarPaciente registrarPaciente = new RegistrarPaciente();
+        this.setVisible(false);
+        registrarPaciente.setVisible(true);
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     private void continuaLogin(boolean sonCredencialesValidas) throws SQLException {
