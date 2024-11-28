@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package UserInterface;
 
 /**
@@ -107,6 +103,11 @@ public class Menu extends javax.swing.JFrame {
         ButtonTratamientoMedico.setForeground(new java.awt.Color(0, 0, 0));
         ButtonTratamientoMedico.setText("Tratamiento médico");
         ButtonTratamientoMedico.setPreferredSize(new java.awt.Dimension(500, 100));
+        ButtonTratamientoMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonTratamientoMedicoActionPerformed(evt);
+            }
+        });
 
         ButtonHistorialMedico.setBackground(new java.awt.Color(181, 220, 255));
         ButtonHistorialMedico.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -169,7 +170,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonPerfilActionPerformed
 
     private void ButtonHistorialMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonHistorialMedicoActionPerformed
-        // TODO add your handling code here:
+        ConsultaTratamientoMedico ventanaHistorialMedico = new ConsultaTratamientoMedico(this);
+        this.setVisible(false);
+        ventanaHistorialMedico.setVisible(true);
     }//GEN-LAST:event_ButtonHistorialMedicoActionPerformed
 
     private void ButtonAntecedenteMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAntecedenteMedicoActionPerformed
@@ -177,6 +180,12 @@ public class Menu extends javax.swing.JFrame {
         this.setVisible(false);
         ventanaAntecedente.setVisible(true);
     }//GEN-LAST:event_ButtonAntecedenteMedicoActionPerformed
+
+    private void ButtonTratamientoMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTratamientoMedicoActionPerformed
+        RegistroTratamientoMedico ventanaTratamientoMedico = new RegistroTratamientoMedico(this);
+        this.setVisible(false);
+        ventanaTratamientoMedico.setVisible(true);
+    }//GEN-LAST:event_ButtonTratamientoMedicoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

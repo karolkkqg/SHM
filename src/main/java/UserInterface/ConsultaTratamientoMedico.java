@@ -23,16 +23,19 @@ import javax.swing.table.DefaultTableModel;
  * @author kahun
  */
 public class ConsultaTratamientoMedico extends javax.swing.JFrame {
-
+    private final javax.swing.JFrame VENTANA_ANTERIOR;
+    
     /**
      * Creates new form ConsultaTratamientoMedico
      */
-    public ConsultaTratamientoMedico() {
+    public ConsultaTratamientoMedico(javax.swing.JFrame ventanaAnterior) {
+        this.VENTANA_ANTERIOR = ventanaAnterior;
         initComponents();
-        cargarTratamientosEnTabla(1);
+        cargarTratamientosEnTabla();
+        setLocationRelativeTo(null);
     }
     
-    private void cargarTratamientosEnTabla(int idPaciente) {
+    private void cargarTratamientosEnTabla() {
         try {
             // Configurar el modelo de tabla con las columnas necesarias
             DefaultTableModel modeloTabla = new DefaultTableModel();
@@ -45,7 +48,7 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
 
             // Obtener los tratamientos y dosis del paciente
             TratamientoDAO tratamientoDAO = new TratamientoDAO();
-            ArrayList<Tratamiento> listaTratamientos = tratamientoDAO.obtenerTratamientosConDosis(idPaciente);
+            ArrayList<Tratamiento> listaTratamientos = tratamientoDAO.obtenerTratamientosConDosis(BussinesLogic.SessionDetails.getInstance().getId());
 
             // Llenar el modelo de tabla con los datos obtenidos
             for (Tratamiento tratamiento : listaTratamientos) {
@@ -82,8 +85,7 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         lblRegistrarTratamiento = new javax.swing.JLabel();
-        lblRegistrarTratamiento1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        ButtonRegresar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTratamientosMedicos = new javax.swing.JTable();
@@ -91,54 +93,42 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
         btnModificarTratamiento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel2.setBackground(new java.awt.Color(70, 141, 212));
 
         lblRegistrarTratamiento.setFont(new java.awt.Font("Segoe UI", 1, 35)); // NOI18N
         lblRegistrarTratamiento.setForeground(java.awt.Color.white);
         lblRegistrarTratamiento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblRegistrarTratamiento.setText("Visualizar tratamiento");
+        lblRegistrarTratamiento.setText("Historial Médico");
 
-        lblRegistrarTratamiento1.setFont(new java.awt.Font("Segoe UI", 1, 35)); // NOI18N
-        lblRegistrarTratamiento1.setForeground(java.awt.Color.white);
-        lblRegistrarTratamiento1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblRegistrarTratamiento1.setText("Visualizar tratamiento");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        ButtonRegresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ButtonRegresar.setIcon(new javax.swing.ImageIcon("src/main/java/UserInterface/Recursos/icono_regresar.png"));
+        ButtonRegresar.setToolTipText("");
+        ButtonRegresar.setBorderPainted(false);
+        ButtonRegresar.setContentAreaFilled(false);
+        ButtonRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 343, Short.MAX_VALUE)
-                .addComponent(lblRegistrarTratamiento1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(395, 395, 395))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(ButtonRegresar)
+                .addGap(300, 300, 300)
                 .addComponent(lblRegistrarTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(418, 418, 418))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblRegistrarTratamiento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRegistrarTratamiento1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(ButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 4, Short.MAX_VALUE))
+            .addComponent(lblRegistrarTratamiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(java.awt.Color.white);
@@ -175,25 +165,25 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(254, 254, 254)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(39, 39, 39)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1036, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnVisualizarTratamiento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnModificarTratamiento))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addComponent(btnModificarTratamiento)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVisualizarTratamiento)
                     .addComponent(btnModificarTratamiento))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -201,12 +191,14 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -228,9 +220,10 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
 
         // Abre la ventana de visualización y pasa los datos
         VisualizacionTratamientoMedico visualizacion = new VisualizacionTratamientoMedico(
-            fechaInicio, medicamento, duracion, cantidad, metodoAdministracion, nota
+            this, fechaInicio, medicamento, duracion, cantidad, metodoAdministracion, nota
         );
         visualizacion.setVisible(true);
+        this.setVisible(false);
     } else {
         JOptionPane.showMessageDialog(this, "Selecciona un tratamiento para visualizar.");
     }
@@ -253,7 +246,7 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
         try {
             try {
                 visualizacion = new ModificacionTratamientoMedico(
-                        fechaInicio, medicamento, duracion, cantidad, metodoAdministracion, nota
+                        this, fechaInicio, medicamento, duracion, cantidad, metodoAdministracion, nota
                 );
             } catch (ParseException ex) {
                 Logger.getLogger(ConsultaTratamientoMedico.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,55 +255,26 @@ public class ConsultaTratamientoMedico extends javax.swing.JFrame {
             Logger.getLogger(ConsultaTratamientoMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
         visualizacion.setVisible(true);
+        this.setVisible(false);
     } else {
         JOptionPane.showMessageDialog(this, "Selecciona un tratamiento para visualizar.");
     }
     }//GEN-LAST:event_btnModificarTratamientoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultaTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultaTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultaTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultaTratamientoMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void ButtonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRegresarActionPerformed
+        this.VENTANA_ANTERIOR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ButtonRegresarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultaTratamientoMedico().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonRegresar;
     private javax.swing.JButton btnModificarTratamiento;
     private javax.swing.JButton btnVisualizarTratamiento;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblRegistrarTratamiento;
-    private javax.swing.JLabel lblRegistrarTratamiento1;
     private javax.swing.JTable tblTratamientosMedicos;
     // End of variables declaration//GEN-END:variables
 }
